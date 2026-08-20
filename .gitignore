@@ -1,0 +1,12 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# 打包产物（发队友用，不入库）
+*.zip
+
+# 论文 PDF（还有 4 处错误待修，修好再推）
+*.pdf
+
+# 旧 git 历史备份（仅本地）
+.backup_delivery_vrp_git/
