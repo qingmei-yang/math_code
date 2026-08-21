@@ -11,12 +11,16 @@ def all_indicators():
     return [ind for _, _, inds in C.DIMENSIONS for ind in inds]
 
 
-def normalize(value, values, negative):
-    """Min-Max 归一化到 0-1；负向指标反向（值越大得分越低）。"""
+def normalize(value, values, negative, clip=True):
+    """Min-Max 归一化到 0-1；负向指标反向（值越大得分越低）。
+    clip=True 时超出标尺范围（如南山区部分指标优于/劣于五城市极值）截断到 [0,1]。"""
     mn, mx = min(values), max(values)
     if abs(mx - mn) < 1e-12:
         return 1.0
-    return (mx - value) / (mx - mn) if negative else (value - mn) / (mx - mn)
+    score = (mx - value) / (mx - mn) if negative else (value - mn) / (mx - mn)
+    if clip:
+        score = max(0.0, min(1.0, score))
+    return score
 
 
 def compute_all():
